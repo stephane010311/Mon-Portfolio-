@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="rw">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ibyiza byacu | Serivisi z'ikoranabuhanga za kijyambere</title>
+<title>Stéphane KOUASSI | Développeur Full Stack</title>
+<link rel="icon" type="image/png" href="assets/images/photo4.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -257,9 +258,149 @@
       0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
       50% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.6); }
     }
+
+    /*section projets*/
+  @keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.timeline-line {
+  height: 0;
+  transition: height 1.5s ease;
+}
+
+.timeline-line.revealed {
+  height: 100%;
+}
+
+/* État initial de la section */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.2s cubic-bezier(0.215, 0.610, 0.355, 1), 
+              transform 1.2s cubic-bezier(0.215, 0.610, 0.355, 1);
+  will-change: opacity, transform;
+}
+
+/* État quand la section est visible */
+.section-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animations d'entrée variées */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 1s cubic-bezier(0.215, 0.610, 0.355, 1),
+              transform 1s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 1s cubic-bezier(0.215, 0.610, 0.355, 1),
+              transform 1s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 1s cubic-bezier(0.215, 0.610, 0.355, 1),
+              transform 1s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.reveal-left.revealed,
+.reveal-right.revealed,
+.reveal-scale.revealed {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.reveal-right {
+  transition-delay: 0.2s;
+}
+
+/* Barres de compétences */
+.skill-bar {
+  width: 0% !important;
+  transition: width 1.5s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+.skill-bar.animated {
+  width: var(--target-width) !important;
+}
+
+/* Stagger cards projets */
+.project-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.project-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger stats hero */
+.stat-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.stat-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Points timeline pulse */
+.timeline-dot {
+  transform: scale(0);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.timeline-dot.revealed {
+  transform: scale(1);
+}
+
+/* Badge disponible */
+.badge-available {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease 1.5s, transform 0.6s ease 1.5s;
+}
+.badge-available.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
   </style>
 </head>
 <body class="bg-black text-white overflow-x-hidden">
+
+<div id="preloader" class="fixed inset-0 bg-black z-[9999] flex flex-col items-center justify-center transition-all duration-1000 ease-in-out">
+  
+  <div class="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+
+  <div class="relative z-10 text-center font-bold tracking-wider space-y-2">
+    
+    <div id="preloader-sk" class="text-5xl text-white opacity-0 scale-90 transition-all duration-700 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-cyan-400 drop-shadow-[0_0_15px_rgba(167,139,250,0.5)]">
+      SK
+    </div>
+    
+    <h1 class="text-xl text-white uppercase tracking-[0.4em] opacity-0 transition-all duration-1000 delay-300 translate-y-2" id="preloader-name">
+      Stéphane Kouassi
+    </h1>
+    
+    <div class="w-32 h-[2px] bg-white/10 mx-auto rounded-full overflow-hidden relative opacity-0 transition-all duration-500 delay-500" id="preloader-bar-container">
+      <div class="h-full bg-gradient-to-r from-purple-500 to-cyan-400 w-0 transition-all duration-1000 ease-out" id="preloader-bar"></div>
+    </div>
+
+    <p class="text-[10px] text-cyan-400 uppercase tracking-[0.25em] opacity-0 transition-all duration-700 delay-700" id="preloader-role">
+      Développeur Full Stack
+    </p>
+    
+  </div>
+</div>
+
   <!-- Interactive Cursor -->
   <div class="interactive-cursor" id="cursor"></div>
   
@@ -275,131 +416,69 @@
   <div class="floating-orb w-64 h-64 bg-gradient-to-r from-green-400 to-blue-400 bottom-20 left-1/2 opacity-20" style="animation-delay: -2s;"></div>
 
   <!-- Navigation -->
-  <nav class="glass-morphism fixed w-full z-50 transition-all duration-500 py-4" id="navbar">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="flex justify-between items-center">
+<nav class="glass-morphism fixed w-full z-50 transition-all duration-500 py-4" id="navbar">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex justify-between items-center">
 
-     <!-- LOGO + PHOTO -->
+      <!-- LOGO + PHOTO -->
       <div class="flex items-center space-x-3">
-    <!-- Photo de profil -->
         <div class="relative">
-     <img 
-        src="assets/images/photo4.png" 
-        alt="Stéphane KOUASSI"
-        class="w-14 h-14 rounded-full object-cover border-2 border-purple-400"
-        style="box-shadow: 0 0 12px rgba(167, 139, 250, 0.6);"
-      >
-          <!--Point vert "disponible" -->
+          <img
+            src="assets/images/photo4.png"
+            alt="Stéphane KOUASSI"
+            class="w-14 h-14 rounded-full object-cover border-2 border-purple-400"
+            style="box-shadow: 0 0 12px rgba(167, 139, 250, 0.6);"
+          >
           <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-black"></span>
         </div>
-        <!-- Nom -->
-        <div class="flex items-center space-x-4">
-          <div class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300">
-            <a href="#home" class="flex items-center">
-              <span class="animate-bounce mr-2">🚀</span>
-              <span class="typing-animation">Stéphane KOUASSI</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- MENU DESKTOP -->
-        <div class="hidden lg:flex items-center space-x-8">
-          <a href="#home" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
-            Accueil
-            <span class="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
+        <div class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent hover:scale-110 transition-transform duration-300">
+          <a href="#home" class="flex items-center">
+            <span class="animate-bounce mr-2">🚀</span>
+            <span class="typing-animation">Stéphane KOUASSI</span>
           </a>
-          <a href="#services" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
-            À propos
-            <span class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
-          </a>
-          <a href="#innovation" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
-            Projets
-            <span class="absolute inset-0 rounded-full bg-gradient-to-r from-green-400 to-blue-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
-          </a>
-          <a href="#contact" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
-            Compétences
-            <span class="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
-          </a>
-           <a href="#contact" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
-            Expériences
-            <span class="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
-          </a>
-          <a href="#contact" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
-            Services
-            <span class="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
-          </a>
-           <a href="#contact" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
-            Contact
-            <span class="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
-          </a>
-        </div>
-
-        <!-- BURGER MOBILE -->
-        <div class="lg:hidden">
-          <button class="p-2 rounded-full hover:bg-white/10 transition-colors" id="mobileMenuButton">
-            <i class="fas fa-bars text-xl"></i>
-          </button>
         </div>
       </div>
-    </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <!-- <section id="home" class="hero-3d min-h-screen flex items-center justify-center relative overflow-hidden">
-    <div class="absolute inset-0" id="hero3d"></div>
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="text-center">
-        <div class="mb-8">
-            <h1 class="text-6xl md:text-8xl font-black mb-6 parallax-element">
-                <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent text-glow">
-                    Stéphane KOUASSI
-                </span>
-            </h1>
-          <div class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8 parallax-element" data-speed="0.5">
-            <span class="typing-text">Développeur Full Stack — Je transforme des idées en applications web modernes</span>
-          </div>
-        </div>
-        
-       <div class="flex flex-col sm:flex-row gap-6 justify-center items-center parallax-element" data-speed="0.3">
-  
-            <a href="#projects" class="magnetic-button neon-border px-8 py-4 rounded-full text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
-                Voir mes projets <i class="fas fa-folder-open"></i>
-            </a>
-
-            <a href="#contact" class="magnetic-button glass-morphism px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/20 transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
-                Me contacter <i class="fas fa-envelope"></i>
+      <!-- MENU DESKTOP -->
+      <div class="hidden lg:flex items-center space-x-2">
+        <a href="#home" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
+          Accueil
+          <span class="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
         </a>
-
-        </div>
-        
-       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 parallax-element" data-speed="0.2">
-  
-        <div class="holographic-card p-6 rounded-xl text-center">
-            <div class="text-3xl font-bold text-cyan-400 mb-2" data-counter="1">1</div>
-            <div class="text-sm text-gray-400">An d'expérience</div>
-        </div>
-
-        <div class="holographic-card p-6 rounded-xl text-center">
-            <div class="text-3xl font-bold text-purple-400 mb-2" data-counter="12">12</div>
-            <div class="text-sm text-gray-400">Projets réalisés</div>
-        </div>
-
-        <div class="holographic-card p-6 rounded-xl text-center">
-            <div class="text-3xl font-bold text-pink-400 mb-2" data-counter="8">8</div>
-            <div class="text-sm text-gray-400">Technologies</div>
-        </div>
-
-        <div class="holographic-card p-6 rounded-xl text-center">
-            <div class="text-3xl font-bold text-green-400 mb-2" data-counter="200">22</div>
-            <div class="text-sm text-gray-400">Contributions GitHub</div>
-        </div>
-
-    </div>
+        <a href="#about" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
+          À propos
+          <span class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
+        </a>
+        <a href="#projects" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
+          Projets
+          <span class="absolute inset-0 rounded-full bg-gradient-to-r from-pink-400 to-purple-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
+        </a>
+        <a href="#services" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
+          Services
+          <span class="absolute inset-0 rounded-full bg-gradient-to-r from-green-400 to-cyan-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
+        </a>
+        <a href="#experience" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
+          Expériences
+          <span class="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
+        </a>
+        <a href="#contact" class="nav-link relative group px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/10">
+          Contact
+          <span class="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
+        </a>
       </div>
-    </div>
-  </section> -->
 
-  <section id="home" class="hero-3d min-h-screen flex items-center justify-center relative overflow-hidden">
+      <!-- BURGER MOBILE -->
+      <div class="lg:hidden">
+        <button class="section-reveal p-2 rounded-full hover:bg-white/10 transition-colors" id="mobileMenuButton">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+  <section id="home" class="section-reveal hero-3d min-h-screen flex items-center justify-center relative overflow-hidden">
   <div class="absolute inset-0" id="hero3d"></div>
   <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
 
@@ -430,19 +509,19 @@
 
         <!-- Stats -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 parallax-element" data-speed="0.2">
-          <div class="holographic-card p-6 rounded-xl text-center">
+          <div class="stat-card holographic-card p-6 rounded-xl text-center">
             <div class="text-3xl font-bold text-cyan-400 mb-2" data-counter="1">1</div>
             <div class="text-sm text-gray-400">An d'expérience</div>
           </div>
-          <div class="holographic-card p-6 rounded-xl text-center">
+          <div class="stat-card holographic-card p-6 rounded-xl text-center">
             <div class="text-3xl font-bold text-purple-400 mb-2" data-counter="12">8</div>
             <div class="text-sm text-gray-400">Projets réalisés</div>
           </div>
-          <div class="holographic-card p-6 rounded-xl text-center">
+          <div class="stat-card holographic-card p-6 rounded-xl text-center">
             <div class="text-3xl font-bold text-pink-400 mb-2" data-counter="8">12</div>
             <div class="text-sm text-gray-400">Technologies</div>
           </div>
-          <div class="holographic-card p-6 rounded-xl text-center">
+          <div class="stat-card holographic-card p-6 rounded-xl text-center">
             <div class="text-3xl font-bold text-green-400 mb-2" data-counter="22">22</div>
             <div class="text-sm text-gray-400">Contributions GitHub</div>
           </div>
@@ -458,16 +537,16 @@
           <div class="absolute inset-0 rounded-full border-2 border-dashed border-purple-400 opacity-40 animate-spin" style="animation-duration: 10s;"></div>
           <!-- Photo -->
           <img
-            src="assets/images/photo3.png"
+            src="assets/images/photo2.png"
             alt="Stéphane KOUASSI"
-            class="relative w-80 h-80 lg:w-[500px] lg:h-[500px] rounded-full object-cover border-4 border-purple-500"
+            class="relative w-80 h-80 lg:w-[500px] lg:h-[500px] rounded-full object-cover object-top border-4 border-purple-500"
             style="box-shadow: 0 0 40px rgba(167, 139, 250, 0.5);"
           >
           <!-- Badge disponible -->
-          <div class="absolute bottom-6 right-6 glass-morphism px-4 py-2 rounded-full flex items-center gap-2">
-            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-            <span class="text-sm font-medium text-green-400">Disponible</span>
-          </div>
+        <div class="badge-available absolute bottom-6 right-6 glass-morphism px-4 py-2 rounded-full flex items-center gap-2">
+          <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+          <span class="text-sm font-medium text-green-400">Disponible</span>
+        </div>
         </div>
       </div>
 
@@ -475,127 +554,383 @@
   </div>
 </section>
 
-  <!-- <section id="services" class="py-20 relative section-reveal">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl font-bold mb-6">
-          <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Serivisi za Future
-          </span>
-        </h2>
-        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-          Dukoresha tekenoloji za kijyambere zitarafata ku isi
+
+<section id="about" class="section-reveal py-20 relative section-reveal">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-5xl font-bold mb-6">
+        <span class="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+          À propos de moi
+        </span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+      <!-- Texte gauche -->
+      <div class="reveal-left space-y-6">
+        <p class="text-gray-300 text-lg leading-relaxed">
+          Salut ! Je suis <span class="text-purple-400 font-semibold">Stéphane KOUASSI</span>, développeur Full Stack passionné par la création d'applications web et mobiles modernes.
         </p>
+        <p class="text-gray-400 leading-relaxed">
+          Avec 1 an d'expérience, j'ai eu l'occasion de travailler sur des projets variés allant des interfaces utilisateurs soignées jusqu'aux architectures backend robustes. J'aime résoudre des problèmes complexes avec des solutions simples et élégantes.
+        </p>
+        <p class="text-gray-400 leading-relaxed">
+          Actuellement disponible pour des missions freelance ou une opportunité en CDD/CDI.
+        </p>
+
+        <!-- Infos rapides -->
+        <div class="grid grid-cols-2 gap-4 mt-8">
+          <div class="holographic-card p-4 rounded-xl">
+            <div class="text-sm text-gray-400 mb-1">📍 Localisation</div>
+            <div class="text-white font-medium">Bingerville Abidjan, Côte d'Ivoire</div>
+          </div>
+          <div class="holographic-card p-4 rounded-xl">
+            <div class="text-sm text-gray-400 mb-1">💼 Statut</div>
+            <div class="text-green-400 font-medium">Disponible</div>
+          </div>
+          <div class="holographic-card p-4 rounded-xl">
+            <div class="text-sm text-gray-400 mb-1">🎓 Formation</div>
+            <div class="text-white font-medium">Bac+5 Multimédia</div>
+             <div class="text-xs text-purple-400 mt-1">Suivi d'une formation de 6 mois à We.code — Epitech</div>
+          </div>
+          <div class="holographic-card p-4 rounded-xl">
+            <div class="text-sm text-gray-400 mb-1">🌍 Langues</div>
+            <div class="text-white font-medium">Français</div>
+          </div>
+          
+        </div>
+
+        <!-- Bouton CV -->
+        <a href="assets/cv.pdf" download class="magnetic-button inline-flex items-center gap-2 mt-4 px-8 py-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:scale-105 transition-all duration-300">
+          Télécharger mon CV <i class="fas fa-download"></i>
+        </a>
       </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="morphing-card holographic-card p-8 rounded-2xl group cursor-pointer">
-          <div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">🤖</div>
-          <h3 class="text-2xl font-bold mb-4 text-cyan-400">Artificial Intelligence</h3>
-          <p class="text-gray-400 mb-6">Machine Learning, Deep Learning, NLP na Computer Vision by'ubuhanga bwa AI</p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-sm">TensorFlow</span>
-            <span class="px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-sm">PyTorch</span>
-            <span class="px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-sm">GPT</span>
+
+      <!-- Compétences droite -->
+      <div class="reveal-right space-y-5">
+        <h3 class="text-xl font-bold text-white mb-6">Stack technique</h3>
+
+        <!-- Exemple de barre (répète pour chaque techno) -->
+        <div>
+          <div class="flex justify-between mb-2">
+            <span class="text-gray-300 font-medium">React / Next.js</span>
+            <span class="text-cyan-400 font-bold">85%</span>
           </div>
-          <div class="relative">
-            <svg class="progress-ring w-16 h-16" viewBox="0 0 100 100">
-              <circle class="progress-ring-circle" cx="50" cy="50" r="45" fill="transparent" stroke="currentColor" stroke-width="4" style="color: #06b6d4; stroke-dashoffset: 70;"/>
-            </svg>
-            <div class="absolute inset-0 flex items-center justify-center text-sm font-bold text-cyan-400">95%</div>
+          <div class="w-full bg-white/10 rounded-full h-2">
+            <div class="skill-bar bg-gradient-to-r from-cyan-400 to-blue-400 h-2 rounded-full" style="--target-width: 85%"></div>
           </div>
         </div>
 
-        <div class="morphing-card holographic-card p-8 rounded-2xl group cursor-pointer">
-          <div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">🥽</div>
-          <h3 class="text-2xl font-bold mb-4 text-purple-400">VR/AR Development</h3>
-          <p class="text-gray-400 mb-6">Virtual Reality na Augmented Reality applications za kijyambere</p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">Unity</span>
-            <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">Unreal</span>
-            <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">ARKit</span>
+        <div>
+          <div class="flex justify-between mb-2">
+            <span class="text-gray-300 font-medium">Node.js / NestJS</span>
+            <span class="text-purple-400 font-bold">80%</span>
           </div>
-          <div class="relative">
-            <svg class="progress-ring w-16 h-16" viewBox="0 0 100 100">
-              <circle class="progress-ring-circle" cx="50" cy="50" r="45" fill="transparent" stroke="currentColor" stroke-width="4" style="color: #a855f7; stroke-dashoffset: 85;"/>
-            </svg>
-            <div class="absolute inset-0 flex items-center justify-center text-sm font-bold text-purple-400">90%</div>
+          <div class="w-full bg-white/10 rounded-full h-2">
+            <div class="skill-bar bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full" style="--target-width: 80%"></div>
           </div>
         </div>
 
-        <div class="morphing-card holographic-card p-8 rounded-2xl group cursor-pointer">
-          <div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">⛓️</div>
-          <h3 class="text-2xl font-bold mb-4 text-green-400">Blockchain & Web3</h3>
-          <p class="text-gray-400 mb-6">Smart Contracts, DApps, NFTs na cryptocurrency solutions</p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">Ethereum</span>
-            <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">Solidity</span>
-            <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">DeFi</span>
+        <div>
+          <div class="flex justify-between mb-2">
+            <span class="text-gray-300 font-medium">Laravel / PHP</span>
+            <span class="text-pink-400 font-bold">75%</span>
           </div>
-          <div class="relative">
-            <svg class="progress-ring w-16 h-16" viewBox="0 0 100 100">
-              <circle class="progress-ring-circle" cx="50" cy="50" r="45" fill="transparent" stroke="currentColor" stroke-width="4" style="color: #10b981; stroke-dashoffset: 100;"/>
-            </svg>
-            <div class="absolute inset-0 flex items-center justify-center text-sm font-bold text-green-400">85%</div>
+          <div class="w-full bg-white/10 rounded-full h-2">
+            <div class="skill-bar bg-gradient-to-r from-pink-400 to-red-400 h-2 rounded-full" style="--target-width: 75%"></div>
           </div>
         </div>
 
-        <div class="morphing-card holographic-card p-8 rounded-2xl group cursor-pointer">
-          <div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">📡</div>
-          <h3 class="text-2xl font-bold mb-4 text-yellow-400">IoT & Edge Computing</h3>
-          <p class="text-gray-400 mb-6">Internet of Things na Edge Computing solutions za smart cities</p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm">Arduino</span>
-            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm">Raspberry Pi</span>
-            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm">5G</span>
+        <div>
+          <div class="flex justify-between mb-2">
+            <span class="text-gray-300 font-medium">React Native / Flutter</span>
+            <span class="text-yellow-400 font-bold">70%</span>
           </div>
-          <div class="relative">
-            <svg class="progress-ring w-16 h-16" viewBox="0 0 100 100">
-              <circle class="progress-ring-circle" cx="50" cy="50" r="45" fill="transparent" stroke="currentColor" stroke-width="4" style="color: #f59e0b; stroke-dashoffset: 115;"/>
-            </svg>
-            <div class="absolute inset-0 flex items-center justify-center text-sm font-bold text-yellow-400">80%</div>
+          <div class="w-full bg-white/10 rounded-full h-2">
+            <div class="skill-bar bg-gradient-to-r from-yellow-400 to-orange-400 h-2 rounded-full" style="--target-width: 70%"></div>
           </div>
         </div>
 
-        <div class="morphing-card holographic-card p-8 rounded-2xl group cursor-pointer">
-          <div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">⚛️</div>
-          <h3 class="text-2xl font-bold mb-4 text-indigo-400">Quantum Computing</h3>
-          <p class="text-gray-400 mb-6">Quantum algorithms na quantum machine learning research</p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="px-3 py-1 bg-indigo-500/20 text-indigo-400 rounded-full text-sm">Qiskit</span>
-            <span class="px-3 py-1 bg-indigo-500/20 text-indigo-400 rounded-full text-sm">Cirq</span>
-            <span class="px-3 py-1 bg-indigo-500/20 text-indigo-400 rounded-full text-sm">Q#</span>
+        <div>
+          <div class="flex justify-between mb-2">
+            <span class="text-gray-300 font-medium">MySQL / MongoDB</span>
+            <span class="text-green-400 font-bold">80%</span>
           </div>
-          <div class="relative">
-            <svg class="progress-ring w-16 h-16" viewBox="0 0 100 100">
-              <circle class="progress-ring-circle" cx="50" cy="50" r="45" fill="transparent" stroke="currentColor" stroke-width="4" style="color: #6366f1; stroke-dashoffset: 170;"/>
-            </svg>
-            <div class="absolute inset-0 flex items-center justify-center text-sm font-bold text-indigo-400">60%</div>
+          <div class="w-full bg-white/10 rounded-full h-2">
+            <div class="skill-bar bg-gradient-to-r from-green-400 to-emerald-400 h-2 rounded-full" style="--target-width: 80%"></div>
           </div>
         </div>
 
-        <div class="morphing-card holographic-card p-8 rounded-2xl group cursor-pointer">
-          <div class="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">🌐</div>
-          <h3 class="text-2xl font-bold mb-4 text-pink-400">Metaverse Development</h3>
-          <p class="text-gray-400 mb-6">Virtual worlds, digital twins na immersive experiences</p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="px-3 py-1 bg-pink-500/20 text-pink-400 rounded-full text-sm">Unreal Engine</span>
-            <span class="px-3 py-1 bg-pink-500/20 text-pink-400 rounded-full text-sm">Omniverse</span>
-            <span class="px-3 py-1 bg-pink-500/20 text-pink-400 rounded-full text-sm">WebXR</span>
+        <div>
+          <div class="flex justify-between mb-2">
+            <span class="text-gray-300 font-medium">Docker / Linux</span>
+            <span class="text-indigo-400 font-bold">65%</span>
           </div>
-          <div class="relative">
-            <svg class="progress-ring w-16 h-16" viewBox="0 0 100 100">
-              <circle class="progress-ring-circle" cx="50" cy="50" r="45" fill="transparent" stroke="currentColor" stroke-width="4" style="color: #ec4899; stroke-dashoffset: 130;"/>
-            </svg>
-            <div class="absolute inset-0 flex items-center justify-center text-sm font-bold text-pink-400">75%</div>
+          <div class="w-full bg-white/10 rounded-full h-2">
+            <div class="skill-bar bg-gradient-to-r from-indigo-400 to-purple-400 h-2 rounded-full" style="--target-width: 65%"></div>
           </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="projects" class="reveal-scale py-20 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-5xl font-bold mb-6">
+        <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          Mes Projets
+        </span>
+      </h2>
+      <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+        Une sélection de mes réalisations récentes
+      </p>
+    </div>
+
+    <!-- Filtres -->
+    <div class="flex justify-center gap-4 mb-12">
+      <button onclick="filterProjects('all')" class="filter-btn active-filter px-6 py-2 rounded-full border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-black transition-all duration-300" data-filter="all">
+        Tous
+      </button>
+      <button onclick="filterProjects('web')" class="filter-btn px-6 py-2 rounded-full border border-white/20 text-gray-400 hover:border-cyan-400 hover:text-cyan-400 transition-all duration-300" data-filter="web">
+        Web
+      </button>
+      <button onclick="filterProjects('mobile')" class="filter-btn px-6 py-2 rounded-full border border-white/20 text-gray-400 hover:border-yellow-400 hover:text-yellow-400 transition-all duration-300" data-filter="mobile">
+        Mobile
+      </button>
+      <button onclick="filterProjects('fullstack')" class="filter-btn px-6 py-2 rounded-full border border-white/20 text-gray-400 hover:border-pink-400 hover:text-pink-400 transition-all duration-300" data-filter="fullstack">
+        Full Stack
+      </button>
+    </div>
+
+    <!-- Grille projets -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projectsGrid">
+
+      <!-- Projet 1 -->
+    <div class="project-card morphing-card holographic-card rounded-2xl overflow-hidden group" data-category="web">
+    <div class="relative overflow-hidden h-64">
+      <img src="assets/images/projects/freeAds.png" alt="FreeAds"
+        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+      <span class="absolute top-4 left-4 px-3 py-1 bg-cyan-500/80 text-white text-xs rounded-full">Web</span>
+      <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <a href="https://github.com/EpitechCodingAcademyPromo2026/C-DEV-120-ABJ-1-1-freeads-2" target="_blank" rel="noopener noreferrer" 
+          class="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/40 transition-colors">
+          <i class="fab fa-github text-white"></i>
+          <span class="text-white text-xs font-medium">GitHub</span>
+        </a>
+        <a href="https://freeadd-production.up.railway.app/" target="_blank" 
+          class="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/40 transition-colors">
+          <i class="fas fa-external-link-alt text-white"></i>
+          <span class="text-white text-xs font-medium">Live</span>
+        </a>
+      </div>
+    </div>
+    <div class="p-6">
+      <h3 class="text-xl font-bold text-white mb-2">FreeAds</h3>
+      <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+        MmsShop est une plateforme de vente d'articles pour tous les commerçants en ligne.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">HTML/CSS</span>
+        <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">Bootstrap</span>
+        <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">Laravel</span>
+      </div>
+    </div>
+  </div>
+      <!-- Projet 2 -->
+  <div class="project-card morphing-card holographic-card rounded-2xl overflow-hidden group" data-category="fullstack">
+        <div class="relative overflow-hidden h-64">
+            <img src="assets/images/projects/post_it.png" alt="Post-it App"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <span class="absolute top-4 left-4 px-3 py-1 bg-cyan-500/80 text-white text-xs rounded-full">Web</span>
+          <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <a href="https://github.com/EpitechCodingAcademyPromo2026/C-DEV-121-ABJ-1-1-postit-14" target="_blank" rel="noopener noreferrer" 
+              class="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/40 transition-colors">
+              <i class="fab fa-github text-white"></i>
+              <span class="text-white text-xs font-medium">GitHub</span>
+            </a>
+            <a href="https://c-dev-121-abj-1-1-postit-14.vercel.app" target="_blank" rel="noopener noreferrer"
+              class="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/40 transition-colors">
+              <i class="fas fa-external-link-alt text-white"></i>
+              <span class="text-white text-xs font-medium">Live</span>
+            </a>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-white mb-2">Post-it</h3>
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            Application de gestion de mémos en ligne avec une architecture typée, permettant d'ajouter, modifier et supprimer des notes en temps réel via une API.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-pink-500/20 text-pink-400 rounded-full text-xs">Vue 3</span>
+            <span class="px-2 py-1 bg-pink-500/20 text-pink-400 rounded-full text-xs">TypeScript</span>
+            <span class="px-2 py-1 bg-pink-500/20 text-pink-400 rounded-full text-xs">Pinia</span>
+          </div>
+        </div>
+        </div>
+      <!-- Projet 3 -->
+        <div class="project-card morphing-card holographic-card rounded-2xl overflow-hidden group" data-category="web">
+      <div class="relative overflow-hidden h-64">
+        <!-- Miniature YouTube automatique -->
+        <img 
+          src="https://img.youtube.com/vi/GwYk_f9nEf8/hqdefault.jpg"
+          alt="ZIRI Web — Projet Licence"
+          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+        <span class="absolute top-4 left-4 px-3 py-1 bg-cyan-500/80 text-white text-xs rounded-full">Web</span>
+        
+        <!-- Icône Play au centre -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-16 h-16 bg-red-600/80 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <i class="fab fa-youtube text-white text-2xl"></i>
+          </div>
+        </div>
+
+        <!-- Liens overlay au hover -->
+        <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <a href="https://youtu.be/GwYk_f9nEf8" target="_blank"
+            class="flex items-center gap-2 bg-red-600/80 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-red-500 transition-colors">
+            <i class="fab fa-youtube text-white"></i>
+            <span class="text-white text-xs font-medium">Voir la démo</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="p-6">
+        <h3 class="text-xl font-bold text-white mb-2">ZIRI — Application Web</h3>
+        <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+          Application web de vente de vêtements et accessoires pour hommes. Projet de soutenance Licence — ISTC Polytechnique.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">HTML/CSS</span>
+          <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">Laravel</span>
+          <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">Soutenance L3</span>
         </div>
       </div>
     </div>
-  </section>
- -->
+      <!-- Projet 4 -->
+      <div class="project-card morphing-card holographic-card rounded-2xl overflow-hidden group" data-category="fullstack">
+        <div class="relative overflow-hidden h-64">
+          <img src="assets/images/projects/project4.png" alt="Social Media App"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <span class="absolute top-4 left-4 px-3 py-1 bg-pink-500/80 text-white text-xs rounded-full">Full Stack</span>
+          <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+              <i class="fab fa-github text-white"></i>
+            </a>
+            <a href="#" target="_blank" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+              <i class="fas fa-external-link-alt text-white"></i>
+            </a>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-white mb-2">Social Media App</h3>
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            Réseau social avec posts, likes, commentaires, messagerie instantanée et notifications push.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-pink-500/20 text-pink-400 rounded-full text-xs">Next.js</span>
+            <span class="px-2 py-1 bg-pink-500/20 text-pink-400 rounded-full text-xs">NestJS</span>
+            <span class="px-2 py-1 bg-pink-500/20 text-pink-400 rounded-full text-xs">MongoDB</span>
+          </div>
+        </div>
+      </div>
 
-<section id="services" class="py-20 relative section-reveal">
+      <!-- Projet 5 -->
+      <div class="project-card morphing-card holographic-card rounded-2xl overflow-hidden group" data-category="mobile">
+        <div class="relative overflow-hidden h-64">
+          <img 
+            src="https://img.youtube.com/vi/uDfzyCYJ0oc/hqdefault.jpg" 
+            alt="ZIRI Mobile — Projet Master"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <span class="absolute top-4 left-4 px-3 py-1 bg-yellow-500/80 text-white text-xs rounded-full">Mobile</span>
+          
+          <!-- Icône Play -->
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-16 h-16 bg-red-600/80 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <i class="fab fa-youtube text-white text-2xl"></i>
+            </div>
+          </div>
+
+          <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <a href="https://youtube.com/shorts/uDfzyCYJ0oc" target="_blank"
+              class="flex items-center gap-2 bg-red-600/80 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-red-500 transition-colors">
+              <i class="fab fa-youtube text-white"></i>
+              <span class="text-white text-xs font-medium">Voir la démo</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-white mb-2">ZIRI — Application Mobile</h3>
+          <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+            Application mobile de vente de vêtements et accessoires pour hommes. Extension du projet web, soutenance Master — ISTC Polytechnique.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs">Flutter</span>
+            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs">API REST</span>
+            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs">Postman</span>
+            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs">Soutenance M2</span>
+          </div>
+        </div>
+      </div>
+            <!-- Projet 6 -->
+    <div class="project-card morphing-card holographic-card rounded-2xl overflow-hidden group" data-category="web">
+      <div class="relative overflow-hidden h-64">
+        <img 
+          src="https://img.youtube.com/vi/QgxMYoc7COg/hqdefault.jpg" 
+          alt="MUGEFCI — Projet Pratique Professionnelle"
+          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+        <span class="absolute top-4 left-4 px-3 py-1 bg-cyan-500/80 text-white text-xs rounded-full">Web</span>
+
+        <!-- Icône Play -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-16 h-16 bg-red-600/80 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <i class="fab fa-youtube text-white text-2xl"></i>
+          </div>
+        </div>
+
+        <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <a href="https://youtube.com/shorts/QgxMYoc7COg" target="_blank"
+            class="flex items-center gap-2 bg-red-600/80 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-red-500 transition-colors">
+            <i class="fab fa-youtube text-white"></i>
+            <span class="text-white text-xs font-medium">Voir la démo</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="p-6">
+        <h3 class="text-xl font-bold text-white mb-2">MUGEFCI — Portail Web</h3>
+        <p class="text-gray-400 text-sm mb-4 leading-relaxed">
+          Application web développée pour la MUGEFCI dans le cadre d'une pratique professionnelle en Master 2, intégrant une API externe pour la gestion et la consultation des données.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">PHP</span>
+          <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">API REST</span>
+          <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">MUGEFCI</span>
+          <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">Pratique Pro M2</span>
+        </div>
+      </div>
+    </div>
+
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<section id="services" class=" reveal-left py-20 relative">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-16">
       <h2 class="text-5xl font-bold mb-6">
@@ -689,181 +1024,126 @@
 </section>
 
 
-  <!-- <section id="innovation" class="py-20 relative section-reveal">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl font-bold mb-6">
-          <span class="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-            Innovation Lab
-          </span>
-        </h2>
-        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-          Twereka ibintu bifatika by'ejo hazaza
-        </p>
-      </div>
-      
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <div class="space-y-8">
-            <div class="holographic-card p-6 rounded-xl cursor-pointer hover:scale-105 transition-transform duration-300">
-              <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-                  <i class="fas fa-brain text-white"></i>
-                </div>
-                <div>
-                  <h3 class="text-xl font-bold text-cyan-400">Neural Networks</h3>
-                  <p class="text-gray-400">Advanced AI ubwenge bw'ibyapa</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="holographic-card p-6 rounded-xl cursor-pointer hover:scale-105 transition-transform duration-300">
-              <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                  <i class="fas fa-cube text-white"></i>
-                </div>
-                <div>
-                  <h3 class="text-xl font-bold text-purple-400">Digital Twins</h3>
-                  <p class="text-gray-400">Virtual representations of real-world systems</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="holographic-card p-6 rounded-xl cursor-pointer hover:scale-105 transition-transform duration-300">
-              <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
-                  <i class="fas fa-leaf text-white"></i>
-                </div>
-                <div>
-                  <h3 class="text-xl font-bold text-green-400">Green Computing</h3>
-                  <p class="text-gray-400">Sustainable technology solutions</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
 
-        <section id="about" class="py-20 relative section-reveal">
+
+
+  
+
+<!-- Expérience  -->
+
+<section id="experience" class="reveal-right py-20 relative">
   <div class="max-w-7xl mx-auto px-6">
     <div class="text-center mb-16">
       <h2 class="text-5xl font-bold mb-6">
-        <span class="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-          À propos de moi
+        <span class="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">
+          Parcours
         </span>
       </h2>
+      <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+        Formation et expériences professionnelles
+      </p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div class="relative">
+      <!-- Ligne verticale centrale -->
+<div class="timeline-line absolute left-1/2 transform -translate-x-1/2 w-0.5 bg-gradient-to-b from-purple-400 via-cyan-400 to-green-400"></div>
+      <div class="space-y-12">
 
-      <!-- Texte gauche -->
-      <div class="space-y-6">
-        <p class="text-gray-300 text-lg leading-relaxed">
-          Salut ! Je suis <span class="text-purple-400 font-semibold">Stéphane KOUASSI</span>, développeur Full Stack passionné par la création d'applications web et mobiles modernes.
-        </p>
-        <p class="text-gray-400 leading-relaxed">
-          Avec 1 an d'expérience, j'ai eu l'occasion de travailler sur des projets variés allant des interfaces utilisateurs soignées jusqu'aux architectures backend robustes. J'aime résoudre des problèmes complexes avec des solutions simples et élégantes.
-        </p>
-        <p class="text-gray-400 leading-relaxed">
-          Actuellement disponible pour des missions freelance ou une opportunité en CDI.
-        </p>
+        <!-- Entrée 1 : We.code Epitech -->
+        <div class="flex items-center justify-end pr-8 md:pr-16 w-1/2">
+          <div class="holographic-card p-6 rounded-2xl max-w-md">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-code text-white text-sm"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-purple-400">Formation We.code</h3>
+                <p class="text-xs text-gray-400">Epitech — Février 2025 à Juillet 2025</p>
+              </div>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Programme intensif de formation en développement web et mobile. Apprentissage des technologies modernes : React, Laravel, NestJS, React Native, bases de données et DevOps.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs">React</span>
+              <span class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs">Laravel</span>
+              <span class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs">NestJS</span>
+              <span class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs">React Native</span>
+            </div>
+          </div>
+          <!-- Point sur la timeline -->
+          <div class="absolute left-1/2 transform -translate-x-1/2 timeline-dot  w-4 h-4 bg-purple-400 rounded-full border-4 border-black"></div>
+        </div>
 
-        <!-- Infos rapides -->
-        <div class="grid grid-cols-2 gap-4 mt-8">
-          <div class="holographic-card p-4 rounded-xl">
-            <div class="text-sm text-gray-400 mb-1">📍 Localisation</div>
-            <div class="text-white font-medium">Abidjan, Côte d'Ivoire</div>
-          </div>
-          <div class="holographic-card p-4 rounded-xl">
-            <div class="text-sm text-gray-400 mb-1">💼 Statut</div>
-            <div class="text-green-400 font-medium">Disponible</div>
-          </div>
-          <div class="holographic-card p-4 rounded-xl">
-            <div class="text-sm text-gray-400 mb-1">🎓 Formation</div>
-            <div class="text-white font-medium">Bac+3 Informatique</div>
-          </div>
-          <div class="holographic-card p-4 rounded-xl">
-            <div class="text-sm text-gray-400 mb-1">🌍 Langues</div>
-            <div class="text-white font-medium">Français, Anglais</div>
+        <!-- Entrée 2 : Pratiques pro ISTC -->
+        <div class="flex items-center justify-start pl-8 md:pl-16 w-1/2 ml-auto">
+          <div class="absolute left-1/2 transform -translate-x-1/2 timeline-dot w-4 h-4 bg-cyan-400 rounded-full border-4 border-black"></div>
+          <div class="holographic-card p-6 rounded-2xl max-w-md">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-briefcase text-white text-sm"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-cyan-400">Pratiques Professionnelles</h3>
+                <p class="text-xs text-gray-400">SOTRA • ANAC • MUGEFCI — 2022 à 2025</p>
+              </div>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Missions de conception et production multimédia pour des entreprises ivoiriennes dans le cadre des pratiques professionnelles de l'ISTC Polytechnique.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">SOTRA</span>
+              <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">ANAC</span>
+              <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs">MUGEFCI</span>
+            </div>
           </div>
         </div>
 
-        <!-- Bouton CV -->
-        <a href="assets/cv.pdf" download class="magnetic-button inline-flex items-center gap-2 mt-4 px-8 py-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:scale-105 transition-all duration-300">
-          Télécharger mon CV <i class="fas fa-download"></i>
-        </a>
-      </div>
-
-      <!-- Compétences droite -->
-      <div class="space-y-5">
-        <h3 class="text-xl font-bold text-white mb-6">Stack technique</h3>
-
-        ${[
-          {label:'React / Next.js', pct:85, color:'text-cyan-400', bg:'bg-cyan-400'},
-          {label:'Node.js / NestJS', pct:80, color:'text-purple-400', bg:'bg-purple-400'},
-          {label:'Laravel / PHP', pct:75, color:'text-pink-400', bg:'bg-pink-400'},
-          {label:'React Native / Flutter', pct:70, color:'text-yellow-400', bg:'bg-yellow-400'},
-          {label:'MySQL / MongoDB', pct:80, color:'text-green-400', bg:'bg-green-400'},
-          {label:'Docker / Linux', pct:65, color:'text-indigo-400', bg:'bg-indigo-400'},
-        ]}
-
-        <!-- Exemple de barre (répète pour chaque techno) -->
-        <div>
-          <div class="flex justify-between mb-2">
-            <span class="text-gray-300 font-medium">React / Next.js</span>
-            <span class="text-cyan-400 font-bold">85%</span>
+        <!-- Entrée 3 : Master -->
+        <div class="flex items-center justify-end pr-8 md:pr-16 w-1/2">
+          <div class="holographic-card p-6 rounded-2xl max-w-md">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-graduation-cap text-white text-sm"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-green-400">Master Professionnel</h3>
+                <p class="text-xs text-gray-400">ISTC Polytechnique — 2024 à 2025</p>
+              </div>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Master en Arts et Images Numériques option Multimédia. Soutenance d'une application mobile de vente de vêtements et accessoires hommes, extension du projet de Licence.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">Mobile</span>
+              <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">Multimédia</span>
+              <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">Soutenance</span>
+            </div>
           </div>
-          <div class="w-full bg-white/10 rounded-full h-2">
-            <div class="bg-gradient-to-r from-cyan-400 to-blue-400 h-2 rounded-full" style="width: 85%"></div>
-          </div>
+          <div class="absolute left-1/2 transform -translate-x-1/2 timeline-dot w-4 h-4 bg-green-400 rounded-full border-4 border-black"></div>
         </div>
 
-        <div>
-          <div class="flex justify-between mb-2">
-            <span class="text-gray-300 font-medium">Node.js / NestJS</span>
-            <span class="text-purple-400 font-bold">80%</span>
-          </div>
-          <div class="w-full bg-white/10 rounded-full h-2">
-            <div class="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full" style="width: 80%"></div>
-          </div>
-        </div>
-
-        <div>
-          <div class="flex justify-between mb-2">
-            <span class="text-gray-300 font-medium">Laravel / PHP</span>
-            <span class="text-pink-400 font-bold">75%</span>
-          </div>
-          <div class="w-full bg-white/10 rounded-full h-2">
-            <div class="bg-gradient-to-r from-pink-400 to-red-400 h-2 rounded-full" style="width: 75%"></div>
-          </div>
-        </div>
-
-        <div>
-          <div class="flex justify-between mb-2">
-            <span class="text-gray-300 font-medium">React Native / Flutter</span>
-            <span class="text-yellow-400 font-bold">70%</span>
-          </div>
-          <div class="w-full bg-white/10 rounded-full h-2">
-            <div class="bg-gradient-to-r from-yellow-400 to-orange-400 h-2 rounded-full" style="width: 70%"></div>
-          </div>
-        </div>
-
-        <div>
-          <div class="flex justify-between mb-2">
-            <span class="text-gray-300 font-medium">MySQL / MongoDB</span>
-            <span class="text-green-400 font-bold">80%</span>
-          </div>
-          <div class="w-full bg-white/10 rounded-full h-2">
-            <div class="bg-gradient-to-r from-green-400 to-emerald-400 h-2 rounded-full" style="width: 80%"></div>
-          </div>
-        </div>
-
-        <div>
-          <div class="flex justify-between mb-2">
-            <span class="text-gray-300 font-medium">Docker / Linux</span>
-            <span class="text-indigo-400 font-bold">65%</span>
-          </div>
-          <div class="w-full bg-white/10 rounded-full h-2">
-            <div class="bg-gradient-to-r from-indigo-400 to-purple-400 h-2 rounded-full" style="width: 65%"></div>
+        <!-- Entrée 4 : Licence -->
+        <div class="flex items-center justify-start pl-8 md:pl-16 w-1/2 ml-auto">
+          <div class="absolute left-1/2 transform -translate-x-1/2 timeline-dot  w-4 h-4 bg-yellow-400 rounded-full border-4 border-black"></div>
+          <div class="holographic-card p-6 rounded-2xl max-w-md">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-graduation-cap text-white text-sm"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-yellow-400">Licence Professionnelle</h3>
+                <p class="text-xs text-gray-400">ISTC Polytechnique — 2020 à 2023</p>
+              </div>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Licence en Arts et Images Numériques. Soutenance d'une application web de vente de vêtements et accessoires pour hommes.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs">Web</span>
+              <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs">Arts Numériques</span>
+              <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs">Soutenance</span>
+            </div>
           </div>
         </div>
 
@@ -871,474 +1151,598 @@
     </div>
   </div>
 </section>
-        
-        <div class="relative">
-          <div class="ai-chat-bubble glass-morphism p-8 rounded-2xl">
-            <div class="flex items-center space-x-3 mb-4">
-              <div class="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full animate-pulse"></div>
-              <div class="text-lg font-semibold text-cyan-400">AI Assistant</div>
-              <div class="text-sm text-gray-400">Online</div>
-            </div>
-            
-            <div class="space-y-4">
-              <div class="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 p-4 rounded-lg">
-                <p class="text-sm text-gray-300">
-                  <span class="typing-animation">Muraho! Ndi AI Assistant wacu wa kijyambere. Nashobora kugufasha mu</span>
-                  <span class="loading-dots"></span>
-                </p>
-              </div>
-              
-              <div class="bg-white/5 p-4 rounded-lg">
-                <p class="text-sm text-gray-300">
-                  • Machine Learning model development<br>
-                  • VR/AR application design<br>
-                  • Blockchain smart contracts<br>
-                  • IoT system architecture
-                </p>
-              </div>
-            </div>
-            
-            <div class="mt-6">
-              <button class="magnetic-button bg-gradient-to-r from-cyan-500 to-purple-500 px-6 py-3 rounded-full text-white font-semibold hover:scale-105 transition-all duration-300">
-                Ganira na AI <i class="fas fa-comments ml-2"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+
+<!-- Fin Expérience  -->
+
+
+
 
   <!-- Contact Section -->
-  <section id="contact" class="py-20 relative section-reveal">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl font-bold mb-6">
-          <span class="bg-gradient-to-r from-yellow-400 to-red-400 bg-clip-text text-transparent">
-            Twandikire
-          </span>
-        </h2>
-        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-          Reka tukore hamwe ikintu gishya cy'ejo hazaza
-        </p>
-      </div>
-      
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <!-- Contact Form -->
-        <div class="holographic-card p-8 rounded-2xl">
-          <form class="space-y-6" id="contactForm">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label class="block text-sm font-medium text-gray-300 mb-2">Amazina</label>
-                <input type="text" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300" placeholder="Andika amazina yawe">
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                <input type="email" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300" placeholder="email@example.com">
-              </div>
-            </div>
-            
-            <div>
-              <label class="block text-sm font-medium text-gray-300 mb-2">Serivisi</label>
-              <select class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300">
-                <option value="">Hitamo serivisi</option>
-                <option value="ai">Artificial Intelligence</option>
-                <option value="vr">VR/AR Development</option>
-                <option value="blockchain">Blockchain & Web3</option>
-                <option value="iot">IoT & Edge Computing</option>
-                <option value="quantum">Quantum Computing</option>
-                <option value="metaverse">Metaverse Development</option>
-              </select>
-            </div>
-            
-            <div>
-              <label class="block text-sm font-medium text-gray-300 mb-2">Ubutumwa</label>
-              <textarea rows="4" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300" placeholder="Andika ubutumwa bwawe hano..."></textarea>
-            </div>
-            
-            <button type="submit" class="magnetic-button w-full bg-gradient-to-r from-cyan-500 to-purple-500 px-8 py-4 rounded-lg text-white font-semibold hover:scale-105 transition-all duration-300">
-              Ohereza Ubutumwa <i class="fas fa-paper-plane ml-2"></i>
-            </button>
-          </form>
-        </div>
-        
-        <!-- Contact Info -->
-        <div class="space-y-8">
-          <div class="holographic-card p-6 rounded-xl">
-            <div class="flex items-center space-x-4">
-              <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center">
-                <i class="fas fa-envelope text-white"></i>
-              </div>
-              <div>
-                <h3 class="text-lg font-semibold text-cyan-400">Email</h3>
-                <p class="text-gray-400">info@ibyizabyacu.rw</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="holographic-card p-6 rounded-xl">
-            <div class="flex items-center space-x-4">
-              <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                <i class="fas fa-phone text-white"></i>
-              </div>
-              <div>
-                <h3 class="text-lg font-semibold text-purple-400">Telefoni</h3>
-                <p class="text-gray-400">+250 788 123 456</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="holographic-card p-6 rounded-xl">
-            <div class="flex items-center space-x-4">
-              <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
-                <i class="fas fa-map-marker-alt text-white"></i>
-              </div>
-              <div>
-                <h3 class="text-lg font-semibold text-green-400">Aho duba</h3>
-                <p class="text-gray-400">Kigali, Rwanda<br>KG 123 St, Nyarugenge</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="holographic-card p-6 rounded-xl">
-            <h3 class="text-lg font-semibold text-yellow-400 mb-4">Dukurikire kuri Social Media</h3>
-            <div class="flex space-x-4">
-              <a href="#" class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                <i class="fab fa-twitter text-white"></i>
-              </a>
-              <a href="#" class="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                <i class="fab fa-linkedin text-white"></i>
-              </a>
-              <a href="#" class="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                <i class="fab fa-instagram text-white"></i>
-              </a>
-              <a href="#" class="w-10 h-10 bg-gradient-to-r from-gray-700 to-gray-800 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                <i class="fab fa-github text-white"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+<section id="contact" class="section-reveal py-20 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-5xl font-bold mb-6">
+        <span class="bg-gradient-to-r from-yellow-400 to-red-400 bg-clip-text text-transparent">
+          Contactez-moi
+        </span>
+      </h2>
+      <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+        Disponible pour toute opportunité ou collaboration
+      </p>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="bg-black/50 border-t border-white/10 py-12">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div>
-          <div class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-            Ibyiza byacu
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Formulaire -->
+      <div class="holographic-card p-8 rounded-2xl">
+        <form class="space-y-6" id="contactForm">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Nom complet</label>
+              <input type="text" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300" placeholder="Votre nom">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+              <input type="email" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300" placeholder="votre@email.com">
+            </div>
           </div>
-          <p class="text-gray-400 mb-4">
-            Dukoresha tekenoloji za kijyambere gukora ibintu bishya by'ejo hazaza
-          </p>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Sujet</label>
+            <select class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300">
+              <option value="">Choisir un sujet</option>
+              <option value="web">Développement Web</option>
+              <option value="mobile">Application Mobile</option>
+              <option value="fullstack">Projet Full Stack</option>
+              <option value="audit">Audit & Optimisation</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+            <textarea rows="4" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300" placeholder="Décrivez votre projet ou votre demande..."></textarea>
+          </div>
+
+          <button type="submit" class="magnetic-button w-full bg-gradient-to-r from-cyan-500 to-purple-500 px-8 py-4 rounded-lg text-white font-semibold hover:scale-105 transition-all duration-300">
+            Envoyer le message <i class="fas fa-paper-plane ml-2"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- Infos contact -->
+      <div class="space-y-6">
+        <div class="holographic-card p-6 rounded-xl">
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+              <i class="fas fa-envelope text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-cyan-400">Email</h3>
+              <p class="text-gray-400">stephane.kouassi@epitech.eu</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="holographic-card p-6 rounded-xl">
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+              <i class="fas fa-phone text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-purple-400">Téléphone</h3>
+              <p class="text-gray-400">+225 01 03 11 05 28</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="holographic-card p-6 rounded-xl">
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
+              <i class="fas fa-map-marker-alt text-white"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-green-400">Localisation</h3>
+              <p class="text-gray-400">Bingerville, Abidjan — Côte d'Ivoire</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="holographic-card p-6 rounded-xl">
+          <h3 class="text-lg font-semibold text-yellow-400 mb-4">Retrouvez-moi sur</h3>
           <div class="flex space-x-4">
-            <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">
-              <i class="fab fa-twitter"></i>
+            <a href="https://github.com/stephane010311" target="_blank" class="w-12 h-12 bg-gradient-to-r from-gray-700 to-gray-800 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+              <i class="fab fa-github text-white"></i>
             </a>
-            <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
-              <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-pink-400 transition-colors">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-green-400 transition-colors">
-              <i class="fab fa-github"></i>
+            <a href="#" target="_blank" class="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+              <i class="fab fa-linkedin text-white"></i>
             </a>
           </div>
         </div>
-        
-        <div>
-          <h3 class="text-lg font-semibold text-white mb-4">Serivisi</h3>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">AI Development</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">VR/AR Solutions</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-green-400 transition-colors">Blockchain</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">IoT Systems</a></li>
-          </ul>
-        </div>
-        
-        <div>
-          <h3 class="text-lg font-semibold text-white mb-4">Company</h3>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">Kuri twe</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">Akazi</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-green-400 transition-colors">Blog</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Press</a></li>
-          </ul>
-        </div>
-        
-        <div>
-          <h3 class="text-lg font-semibold text-white mb-4">Support</h3>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">Help Center</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">Documentation</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-green-400 transition-colors">API Reference</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Community</a></li>
-          </ul>
-        </div>
       </div>
-      
-      <div class="border-t border-white/10 mt-12 pt-8 text-center">
-        <p class="text-gray-400">
-          © 2025 Ibyiza byacu. Amategeko yose yashinzwe. Designed with ❤️ in Rwanda
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Mobile Menu -->
-  <div class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 opacity-0 invisible transition-all duration-300" id="mobileMenu">
-    <div class="flex flex-col items-center justify-center h-full space-y-8">
-      <a href="#home" class="text-2xl text-white hover:text-cyan-400 transition-colors">Ahabanza</a>
-      <a href="#services" class="text-2xl text-white hover:text-purple-400 transition-colors">Serivisi</a>
-      <a href="#innovation" class="text-2xl text-white hover:text-green-400 transition-colors">Ubuhanga</a>
-      <a href="#contact" class="text-2xl text-white hover:text-yellow-400 transition-colors">Twandikire</a>
     </div>
   </div>
+</section>
 
-  <script>
-    // Interactive Cursor
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', (e) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    });
 
-    // Scroll Progress
-    window.addEventListener('scroll', () => {
-      const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-      document.getElementById('scrollProgress').style.transform = `scaleX(${scrolled / 100})`;
-    });
+  <!-- Footer -->
+<footer class="bg-black/50 border-t border-white/10 py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-    // Particle System
-    function createParticle() {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-      particle.style.animationDelay = Math.random() * 2 + 's';
-      document.getElementById('particleContainer').appendChild(particle);
-      
-      setTimeout(() => {
-        particle.remove();
-      }, 6000);
-    }
+      <div>
+        <div class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+          Stéphane KOUASSI
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+          Développeur Full Stack basé à Abidjan, Côte d'Ivoire. Disponible pour toute opportunité.
+        </p>
+        <div class="flex space-x-4">
+          <a href="https://github.com/stephane010311" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fab fa-github text-xl"></i>
+          </a>
+          <a href="#" target="_blank" class="text-gray-400 hover:text-blue-400 transition-colors">
+            <i class="fab fa-linkedin text-xl"></i>
+          </a>
+        </div>
+      </div>
 
-    setInterval(createParticle, 500);
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-4">Navigation</h3>
+        <ul class="space-y-2">
+          <li><a href="#home" class="text-gray-400 hover:text-cyan-400 transition-colors text-sm">Accueil</a></li>
+          <li><a href="#about" class="text-gray-400 hover:text-purple-400 transition-colors text-sm">À propos</a></li>
+          <li><a href="#projects" class="text-gray-400 hover:text-pink-400 transition-colors text-sm">Projets</a></li>
+          <li><a href="#experience" class="text-gray-400 hover:text-green-400 transition-colors text-sm">Expériences</a></li>
+          <li><a href="#services" class="text-gray-400 hover:text-yellow-400 transition-colors text-sm">Services</a></li>
+          <li><a href="#contact" class="text-gray-400 hover:text-red-400 transition-colors text-sm">Contact</a></li>
+        </ul>
+      </div>
 
-    // Parallax Effect
-    document.addEventListener('mousemove', (e) => {
-      const mouseX = e.clientX / window.innerWidth;
-      const mouseY = e.clientY / window.innerHeight;
-      
-      document.querySelectorAll('.parallax-element').forEach(element => {
-        const speed = element.dataset.speed || 1;
-        const x = (mouseX - 0.5) * speed * 50;
-        const y = (mouseY - 0.5) * speed * 50;
-        element.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      });
-    });
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-4">Services</h3>
+        <ul class="space-y-2">
+          <li class="text-gray-400 text-sm">Développement Frontend</li>
+          <li class="text-gray-400 text-sm">Développement Backend</li>
+          <li class="text-gray-400 text-sm">Application Mobile</li>
+          <li class="text-gray-400 text-sm">Full Stack</li>
+          <!-- <li class="text-gray-400 text-sm">Audit & Optimisation</li> -->
+        </ul>
+      </div>
 
-    // Three.js Hero Background
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById('hero3d').appendChild(renderer.domElement);
+    </div>
 
-    // Create floating geometric shapes
-    const geometry = new THREE.IcosahedronGeometry(1, 1);
-    const material = new THREE.MeshBasicMaterial({ 
-      color: 0x667eea, 
-      wireframe: true,
-      transparent: true,
-      opacity: 0.3
-    });
+    <div class="border-t border-white/10 mt-12 pt-8 text-center">
+      <p class="text-gray-400 text-sm">
+        © 2025 Stéphane KOUASSI — Tous droits réservés
+      </p>
+    </div>
+  </div>
+</footer>
 
-    const shapes = [];
-    for (let i = 0; i < 20; i++) {
-      const mesh = new THREE.Mesh(geometry, material);
-      mesh.position.x = (Math.random() - 0.5) * 20;
-      mesh.position.y = (Math.random() - 0.5) * 20;
-      mesh.position.z = (Math.random() - 0.5) * 20;
-      mesh.rotation.x = Math.random() * Math.PI;
-      mesh.rotation.y = Math.random() * Math.PI;
-      scene.add(mesh);
-      shapes.push(mesh);
-    }
 
-    camera.position.z = 10;
+  <!-- Mobile Menu -->
+<div class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 opacity-0 invisible transition-all duration-300" id="mobileMenu">
+  <div class="flex flex-col items-center justify-center h-full space-y-8">
+    <a href="#home" class="text-2xl text-white hover:text-cyan-400 transition-colors">Accueil</a>
+    <a href="#about" class="text-2xl text-white hover:text-purple-400 transition-colors">À propos</a>
+    <a href="#projects" class="text-2xl text-white hover:text-pink-400 transition-colors">Projets</a>
+    <a href="#experience" class="text-2xl text-white hover:text-green-400 transition-colors">Expériences</a>
+    <a href="#services" class="text-2xl text-white hover:text-yellow-400 transition-colors">Services</a>
+    <a href="#contact" class="text-2xl text-white hover:text-red-400 transition-colors">Contact</a>
+  </div>
+</div>
 
-    function animate() {
-      requestAnimationFrame(animate);
-      
-      shapes.forEach(shape => {
-        shape.rotation.x += 0.005;
-        shape.rotation.y += 0.005;
-        shape.position.y += Math.sin(Date.now() * 0.001 + shape.position.x) * 0.002;
-      });
-      
-      renderer.render(scene, camera);
-    }
-    animate();
+<script>
+// === 1. EFFETS ET INTERACTION INTERFACE ===
 
-    // Resize handler
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+// Interactive Cursor
+const cursor = document.getElementById('cursor');
+if (cursor) {
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+}
 
-    // Typing Animation
-    const texts = [
-        "Développeur Full Stack passionné",
-        "Je construis des apps web de A à Z",
-        "Vue.js • React.js • Next.js • Laravel • Mysql • Mongodb "
-    ];
-    let currentText = 0;
-    let currentChar = 0;
-    let isDeleting = false;
+// Scroll Progress
+window.addEventListener('scroll', () => {
+  const scrollProgress = document.getElementById('scrollProgress');
+  if (scrollProgress) {
+    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    scrollProgress.style.transform = `scaleX(${scrolled / 100})`;
+  }
+});
 
-    function typeWriter() {
-      const element = document.querySelector('.typing-text');
-      const current = texts[currentText];
-      
-      if (isDeleting) {
-        element.textContent = current.substring(0, currentChar - 1);
-        currentChar--;
-      } else {
-        element.textContent = current.substring(0, currentChar + 1);
-        currentChar++;
+// Particle System (CSS)
+function createParticle() {
+  const container = document.getElementById('particleContainer');
+  if (!container) return;
+  const particle = document.createElement('div');
+  particle.className = 'particle';
+  particle.style.left = Math.random() * 100 + '%';
+  particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+  particle.style.animationDelay = Math.random() * 2 + 's';
+  container.appendChild(particle);
+  setTimeout(() => { particle.remove(); }, 6000);
+}
+setInterval(createParticle, 500);
+
+// Parallax Effect
+document.addEventListener('mousemove', (e) => {
+  const mouseX = e.clientX / window.innerWidth;
+  const mouseY = e.clientY / window.innerHeight;
+  document.querySelectorAll('.parallax-element').forEach(element => {
+    const speed = element.dataset.speed || 1;
+    const x = (mouseX - 0.5) * speed * 50;
+    const y = (mouseY - 0.5) * speed * 50;
+    element.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  });
+});
+
+// === 2. ANIMATION THREE.JS (HERO BACKGROUND) ===
+const container = document.getElementById('hero3d');
+if (container) {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  const particlesCount = 1500;
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(particlesCount * 3);
+  for (let i = 0; i < particlesCount * 3; i++) {
+    positions[i] = (Math.random() - 0.5) * 12;
+  }
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+  const material = new THREE.PointsMaterial({
+    size: 0.03,
+    color: 0xa78bfa,
+    transparent: true,
+    opacity: 0.8,
+    blending: THREE.AdditiveBlending
+  });
+
+  const particleMesh = new THREE.Points(geometry, material);
+  scene.add(particleMesh);
+
+  let mouse3dX = 0;
+  let mouse3dY = 0;
+
+  window.addEventListener('mousemove', (event) => {
+    mouse3dX = (event.clientX / window.innerWidth) - 0.5;
+    mouse3dY = (event.clientY / window.innerHeight) - 0.5;
+  });
+
+  const clock = new THREE.Clock();
+  const animate3d = () => {
+    requestAnimationFrame(animate3d);
+    const elapsedTime = clock.getElapsedTime();
+    particleMesh.rotation.y = elapsedTime * 0.05;
+    particleMesh.rotation.x = elapsedTime * 0.02;
+    particleMesh.position.x += (mouse3dX * 0.5 - particleMesh.position.x) * 0.1;
+    particleMesh.position.y += (-mouse3dY * 0.5 - particleMesh.position.y) * 0.1;
+    renderer.render(scene, camera);
+  };
+  animate3d();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+}
+
+// === 3. COMPOSANTS ET ANIMATIONS TEXTES ===
+
+// Typing Animation
+const texts = [
+  "Développeur Full Stack passionné",
+  "Je construis des apps web de A à Z",
+  "Vue.js • React.js • Next.js • Laravel • Mysql • Mongodb"
+];
+let currentText = 0;
+let currentChar = 0;
+let isDeleting = false;
+
+function typeWriter() {
+  const element = document.querySelector('.typing-text');
+  if (!element) return;
+  const current = texts[currentText];
+  if (isDeleting) {
+    element.textContent = current.substring(0, currentChar - 1);
+    currentChar--;
+  } else {
+    element.textContent = current.substring(0, currentChar + 1);
+    currentChar++;
+  }
+  if (!isDeleting && currentChar === current.length) {
+    setTimeout(() => isDeleting = true, 2000);
+  } else if (isDeleting && currentChar === 0) {
+    isDeleting = false;
+    currentText = (currentText + 1) % texts.length;
+  }
+  setTimeout(typeWriter, isDeleting ? 50 : 100);
+}
+typeWriter();
+
+// Counter Animation
+function animateCounters() {
+  const counters = document.querySelectorAll('[data-counter]');
+  counters.forEach(counter => {
+    if (counter.classList.contains('counted')) return;
+    counter.classList.add('counted');
+    const target = parseInt(counter.dataset.counter);
+    const increment = target / 100;
+    let current = 0;
+    const originalText = counter.textContent || '';
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
       }
-      
-      if (!isDeleting && currentChar === current.length) {
-        setTimeout(() => isDeleting = true, 2000);
-      } else if (isDeleting && currentChar === 0) {
-        isDeleting = false;
-        currentText = (currentText + 1) % texts.length;
+      counter.textContent = Math.floor(current) + (originalText.includes('%') ? '%' : '+');
+    }, 20);
+  });
+}
+
+// Filtres Projets
+function filterProjects(category) {
+  const cards = document.querySelectorAll('.project-card');
+  const buttons = document.querySelectorAll('.filter-btn');
+
+  buttons.forEach(btn => {
+    btn.classList.remove('active-filter', 'border-purple-400', 'text-purple-400');
+    btn.classList.add('border-white/20', 'text-gray-400');
+  });
+
+  const activeBtn = document.querySelector(`[data-filter="${category}"]`);
+  if (activeBtn) {
+    activeBtn.classList.add('active-filter', 'border-purple-400', 'text-purple-400');
+    activeBtn.classList.remove('border-white/20', 'text-gray-400');
+  }
+
+  cards.forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = 'block';
+      card.style.animation = 'fadeIn 0.4s ease';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// === 4. INTERSECTION OBSERVER PREMIUM ===
+const observerOptions = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0.15
+};
+
+const observer = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+      if (entry.target.querySelector('[data-counter]')) {
+        animateCounters();
       }
-      
-      setTimeout(typeWriter, isDeleting ? 50 : 100);
+      obs.unobserve(entry.target);
     }
-    typeWriter();
+  });
+}, observerOptions);
 
-    // Counter Animation
-    function animateCounters() {
-      const counters = document.querySelectorAll('[data-counter]');
-      counters.forEach(counter => {
-        const target = parseInt(counter.dataset.counter);
-        const increment = target / 100;
-        let current = 0;
-        
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          counter.textContent = Math.floor(current) + (counter.textContent.includes('%') ? '%' : '+');
-        }, 20);
+document.querySelectorAll('.section-reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+  observer.observe(el);
+});
+
+// Stagger cards projets
+const projectObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const cards = document.querySelectorAll('.project-card');
+      cards.forEach((card, i) => {
+        setTimeout(() => {
+          card.classList.add('revealed');
+        }, i * 120);
       });
+      projectObserver.disconnect();
     }
+  });
+}, { threshold: 0.1 });
 
-    // Intersection Observer for animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          if (entry.target.querySelector('[data-counter]')) {
-            animateCounters();
-          }
-        }
+const projectSection = document.getElementById('projects');
+if (projectSection) projectObserver.observe(projectSection);
+
+// Stagger stats hero
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const stats = document.querySelectorAll('.stat-card');
+      stats.forEach((stat, i) => {
+        setTimeout(() => {
+          stat.classList.add('revealed');
+        }, i * 150);
       });
-    });
+      statObserver.disconnect();
+    }
+  });
+}, { threshold: 0.2 });
 
-    document.querySelectorAll('.section-reveal').forEach(section => {
-      observer.observe(section);
-    });
+const homeSection = document.getElementById('home');
+if (homeSection) statObserver.observe(homeSection);
 
-    // Mobile Menu
-    const mobileMenuButton = document.getElementById('mobileMenuButton');
+// Barres de compétences
+const skillObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const bars = document.querySelectorAll('.skill-bar');
+      bars.forEach((bar, i) => {
+        setTimeout(() => {
+          bar.classList.add('animated');
+        }, i * 150);
+      });
+      skillObserver.disconnect();
+    }
+  });
+}, { threshold: 0.2 });
+
+const aboutSection = document.getElementById('about');
+if (aboutSection) skillObserver.observe(aboutSection);
+
+// Points timeline
+const timelineObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const dots = document.querySelectorAll('.timeline-dot');
+      dots.forEach((dot, i) => {
+        setTimeout(() => {
+          dot.classList.add('revealed');
+        }, i * 300);
+      });
+      timelineObserver.disconnect();
+    }
+  });
+}, { threshold: 0.1 });
+
+const experienceSection = document.getElementById('experience');
+if (experienceSection) timelineObserver.observe(experienceSection);
+
+// Badge disponible
+setTimeout(() => {
+  const badge = document.querySelector('.badge-available');
+  if (badge) badge.classList.add('revealed');
+}, 2500);
+
+// === 5. ANIMATION BARRE TIMELINE AU SCROLL ===
+window.addEventListener('scroll', () => {
+  const timelineLine = document.querySelector('.timeline-line');
+  const section = document.getElementById('experience');
+  if (!timelineLine || !section) return;
+
+  const sectionTop = section.getBoundingClientRect().top;
+  const sectionHeight = section.offsetHeight;
+  const windowHeight = window.innerHeight;
+
+  if (sectionTop < windowHeight) {
+    const scrolled = Math.min(Math.max((windowHeight - sectionTop) / sectionHeight, 0), 1);
+    timelineLine.style.height = (scrolled * 100) + '%';
+  }
+});
+
+// === 6. NAVIGATION ===
+
+// Mobile Menu
+const mobileMenuButton = document.getElementById('mobileMenuButton');
+const mobileMenu = document.getElementById('mobileMenu');
+
+if (mobileMenuButton && mobileMenu) {
+  mobileMenuButton.addEventListener('click', () => {
+    mobileMenu.classList.toggle('opacity-0');
+    mobileMenu.classList.toggle('invisible');
+  });
+  mobileMenu.addEventListener('click', (e) => {
+    if (e.target === mobileMenu) {
+      mobileMenu.classList.add('opacity-0');
+      mobileMenu.classList.add('invisible');
+    }
+  });
+}
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
     const mobileMenu = document.getElementById('mobileMenu');
-
-    mobileMenuButton.addEventListener('click', () => {
-      mobileMenu.classList.toggle('opacity-0');
-      mobileMenu.classList.toggle('invisible');
-    });
-
-    mobileMenu.addEventListener('click', (e) => {
-      if (e.target === mobileMenu) {
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (mobileMenu) {
         mobileMenu.classList.add('opacity-0');
         mobileMenu.classList.add('invisible');
       }
-    });
+    }
+  });
+});
 
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-          
-          // Close mobile menu if open
-          mobileMenu.classList.add('opacity-0');
-          mobileMenu.classList.add('invisible');
-        }
-      });
-    });
+// Navbar background on scroll
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  if (!navbar) return;
+  if (window.scrollY > 100) {
+    navbar.style.background = 'rgba(0, 0, 0, 0.9)';
+    navbar.style.backdropFilter = 'blur(20px)';
+  } else {
+    navbar.style.background = 'rgba(255, 255, 255, 0.1)';
+    navbar.style.backdropFilter = 'blur(20px)';
+  }
+});
 
-    // Form submission
-    document.getElementById('contactForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      // Simulate form submission
-      const button = e.target.querySelector('button[type="submit"]');
-      const originalText = button.innerHTML;
-      button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Byoherejwe...';
-      button.disabled = true;
-      
+// === 7. FORMULAIRE ET BOUTONS ===
+
+// Form submission
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const button = e.target.querySelector('button[type="submit"]');
+    if (!button) return;
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Envoi en cours...';
+    button.disabled = true;
+    setTimeout(() => {
+      button.innerHTML = '<i class="fas fa-check mr-2"></i>Message envoyé !';
       setTimeout(() => {
-        button.innerHTML = '<i class="fas fa-check mr-2"></i>Byoherejwe neza!';
-        setTimeout(() => {
-          button.innerHTML = originalText;
-          button.disabled = false;
-          e.target.reset();
-        }, 2000);
+        button.innerHTML = originalText;
+        button.disabled = false;
+        e.target.reset();
       }, 2000);
-    });
+    }, 2000);
+  });
+}
 
-    // Navbar background on scroll
-    window.addEventListener('scroll', () => {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(0, 0, 0, 0.9)';
-        navbar.style.backdropFilter = 'blur(20px)';
-      } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.1)';
-        navbar.style.backdropFilter = 'blur(20px)';
-      }
-    });
+// Magnetic effect
+document.querySelectorAll('.magnetic-button').forEach(button => {
+  button.addEventListener('mousemove', (e) => {
+    const rect = button.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    button.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+  });
+  button.addEventListener('mouseleave', () => {
+    button.style.transform = 'translate(0, 0)';
+  });
+});
 
-    // Add magnetic effect to buttons
-    document.querySelectorAll('.magnetic-button').forEach(button => {
-      button.addEventListener('mousemove', (e) => {
-        const rect = button.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        button.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
-      });
-      
-      button.addEventListener('mouseleave', () => {
-        button.style.transform = 'translate(0, 0)';
-      });
-    });
-  </script>
+// === 8. PRELOADER ===
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.getElementById('preloader-sk').style.opacity = '1';
+    document.getElementById('preloader-sk').style.transform = 'scale(1)';
+    document.getElementById('preloader-name').style.opacity = '1';
+    document.getElementById('preloader-name').style.transform = 'translateY(0)';
+    document.getElementById('preloader-bar-container').style.opacity = '1';
+    document.getElementById('preloader-role').style.opacity = '1';
+    setTimeout(() => {
+      document.getElementById('preloader-bar').style.width = '100%';
+    }, 200);
+  }, 100);
+});
+
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  setTimeout(() => {
+    if (preloader) {
+      preloader.style.opacity = '0';
+      preloader.style.visibility = 'hidden';
+    }
+    setTimeout(() => { typeof typeWriter === 'function' && typeWriter(); }, 500);
+  }, 1500);
+});
+</script>
 </body>
 </html>
